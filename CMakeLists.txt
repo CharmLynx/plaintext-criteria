@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(pcrit
     src/main.cpp
     src/alphabet.cpp
-    
+    src/preprocess.cpp
 )
 
 target_include_directories(pcrit PRIVATE include)
