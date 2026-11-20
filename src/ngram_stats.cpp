@@ -51,6 +51,17 @@ double entropy(const vector<double>& freq, int l) {
 }
 
 double coincidence_index(const vector<long long>& counts) {
-
-    return {};
+    long long L = 0;
+    double I = 0;
+    for (size_t i = 0; i < counts.size(); i++) {
+        if (counts[i] > 0) {
+            I += counts[i] * (counts[i] - 1);
+        }
+    }
+    for (size_t i = 0; i < counts.size(); i++) {
+        L += counts[i];
+    }
+    I /= L;
+    I /= L - 1;
+    return I;
 }
