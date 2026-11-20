@@ -10,6 +10,7 @@ add_executable(pcrit
     src/preprocess.cpp
     src/ngram_stats.cpp
     src/report_writer.cpp
+    src/sampler.cpp
 )
 
 target_include_directories(pcrit PRIVATE include)
