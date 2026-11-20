@@ -40,8 +40,14 @@ vector<double> to_frequencies(const vector<long long>& counts) {
 }
 
 double entropy(const vector<double>& freq, int l) {
-
-    return {};
+    double h = 0;
+    for (size_t i = 0; i < freq.size(); i++) {
+        if (freq[i] > 0) {
+            h -= freq[i] * log2(freq[i]);
+        }
+    }
+    h /= l;
+    return h;
 }
 
 double coincidence_index(const vector<long long>& counts) {
