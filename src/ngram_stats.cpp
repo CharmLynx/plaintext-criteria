@@ -28,8 +28,15 @@ vector<long long> count_ngrams(const vector<int>& text, int l) {
 }
 
 vector<double> to_frequencies(const vector<long long>& counts) {
-
-    return {};
+    vector<double> freq(counts.size());
+    long long total = 0;
+    for (size_t i = 0; i < counts.size(); i++) {
+        total += counts[i];
+    }
+    for (size_t i = 0; i < counts.size(); i++) {
+        freq[i] = (double)counts[i] / total;
+    }
+    return freq;
 }
 
 double entropy(const vector<double>& freq, int l) {
