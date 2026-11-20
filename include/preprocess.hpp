@@ -10,3 +10,5 @@ int utf8_char_length(unsigned char first_byte);
 std::string normalize_char(const std::string& ch);
 
 std::vector<int> clean_text(const std::string& text);
+
+std::vector<int> load_corpus(const std::string& dir);

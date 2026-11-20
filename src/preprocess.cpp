@@ -3,8 +3,12 @@
 
 #include <fstream>
 #include <sstream>
+#include <iostream>
+#include <algorithm>
+#include <filesystem>
 
 using namespace std;
+namespace fs = std::filesystem;
 
 string read_file(const string& path) {
     ifstream f(path, ios::binary);
@@ -64,4 +68,23 @@ vector<int> clean_text(const string& text) {
     }
 
     return result;
+}
+
+
+vector<int> load_corpus(const string& dir) {
+    vector<string> paths;
+    for (const auto& entry : fs::directory_iterator(dir)) {
+        paths.push_back(entry.path().string());
+    }
+
+    sort(paths.begin(), paths.end());
+
+    vector<int> corpus;
+    for (const string& path : paths) {
+        vector<int> part = clean_text(read_file(path));
+        corpus.insert(corpus.end(), part.begin(), part.end());
+        cout << path << ": " << part.size() << endl;
+    }
+
+    return corpus;
 }
