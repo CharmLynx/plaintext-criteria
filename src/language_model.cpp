@@ -29,7 +29,17 @@ double model_entropy(const LanguageModel& model, int l) {
 }
 
 vector<int> rarest_ngrams(const vector<double>& freq, int k) {
-    return {};
+    vector<int> indices(freq.size());
+    for (size_t i = 0; i < freq.size(); i++) {
+        indices[i] = i;
+    }
+
+    stable_sort(indices.begin(), indices.end(), [&freq](int a, int b) {
+        return freq[a] < freq[b];
+    });
+
+    indices.resize(k);
+    return indices;
 }
 
 vector<int> most_frequent_ngrams(const vector<double>& freq, int k) {
