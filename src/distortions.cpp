@@ -25,7 +25,21 @@ vector<int> vigenere(const vector<int>& text, int r, mt19937& rng) {
 }
 
 vector<int> affine(const vector<int>& text, mt19937& rng) {
-    return {};
+    uniform_int_distribution<int> dist_a(0, M / 2 - 1);
+    uniform_int_distribution<int> dist_b(0, M - 1);
+
+    int a = 1;
+    int b = 0;
+    while (a == 1 && b == 0) {
+        a = 2 * dist_a(rng) + 1;
+        b = dist_b(rng);
+    }
+
+    vector<int> result(text.size());
+    for (size_t i = 0; i < text.size(); i++) {
+        result[i] = (a * text[i] + b) % M;
+    }
+    return result;
 }
 
 vector<int> affine_bigram(const vector<int>& text, mt19937& rng) {
