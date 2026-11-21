@@ -12,6 +12,7 @@ add_executable(pcrit
     src/report_writer.cpp
     src/sampler.cpp
     src/distortions.cpp
+    src/language_model.cpp
 )
 
 target_include_directories(pcrit PRIVATE include)
