@@ -22,7 +22,10 @@ const vector<double>& model_freq(const LanguageModel& model, int l) {
 }
 
 double model_entropy(const LanguageModel& model, int l) {
-    return 0;
+    if (l == 1) {
+        return model.letter_entropy;
+    }
+    return model.bigram_entropy;
 }
 
 vector<int> rarest_ngrams(const vector<double>& freq, int k) {
