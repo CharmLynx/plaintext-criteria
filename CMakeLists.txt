@@ -13,6 +13,7 @@ add_executable(pcrit
     src/sampler.cpp
     src/distortions.cpp
     src/language_model.cpp
+    src/criteria/forbidden.cpp
 )
 
 target_include_directories(pcrit PRIVATE include)
