@@ -15,7 +15,10 @@ LanguageModel build_language_model(const vector<int>& corpus) {
 }
 
 const vector<double>& model_freq(const LanguageModel& model, int l) {
-    return model.letter_freq;
+    if (l == 1) {
+        return model.letter_freq;
+    }
+    return model.bigram_freq;
 }
 
 double model_entropy(const LanguageModel& model, int l) {
