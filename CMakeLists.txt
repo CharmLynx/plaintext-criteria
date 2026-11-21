@@ -15,6 +15,7 @@ add_executable(pcrit
     src/language_model.cpp
     src/criteria/forbidden.cpp
     src/criteria/entropy_test.cpp
+    src/criteria/empty_boxes.cpp
 )
 
 target_include_directories(pcrit PRIVATE include)
