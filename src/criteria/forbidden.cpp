@@ -16,7 +16,14 @@ bool criterion_1_0(const vector<int>& text, int l,
 
 bool criterion_1_1(const vector<int>& text, int l,
                    const vector<int>& forbidden, int k_p) {
-    return false;
+    vector<long long> counts = count_ngrams(text, l);
+    int found = 0;
+    for (int x : forbidden) {
+        if (counts[x] > 0) {
+            found++;
+        }
+    }
+    return found >= k_p;
 }
 
 bool criterion_1_2(const vector<int>& text, int l,
