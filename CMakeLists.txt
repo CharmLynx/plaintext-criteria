@@ -18,6 +18,7 @@ add_executable(pcrit
     src/criteria/entropy_test.cpp
     src/criteria/empty_boxes.cpp
     src/compression.cpp
+    src/criteria/structural.cpp
 )
 
 target_include_directories(pcrit PRIVATE include)
