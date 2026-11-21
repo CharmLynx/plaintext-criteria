@@ -11,6 +11,7 @@ add_executable(pcrit
     src/ngram_stats.cpp
     src/report_writer.cpp
     src/sampler.cpp
+    src/distortions.cpp
 )
 
 target_include_directories(pcrit PRIVATE include)
