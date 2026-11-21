@@ -43,5 +43,23 @@ vector<int> affine(const vector<int>& text, mt19937& rng) {
 }
 
 vector<int> affine_bigram(const vector<int>& text, mt19937& rng) {
-    return {};
+    const int M2 = M * M;
+    uniform_int_distribution<int> dist_a(0, M2 / 2 - 1);
+    uniform_int_distribution<int> dist_b(0, M2 - 1);
+
+    int a = 1;
+    int b = 0;
+    while (a == 1 && b == 0) {
+        a = 2 * dist_a(rng) + 1;
+        b = dist_b(rng);
+    }
+
+    vector<int> result(text.size());
+    for (size_t i = 0; i + 1 < text.size(); i += 2) {
+        int x = text[i] * M + text[i + 1];
+        int y = (a * x + b) % M2;
+        result[i] = y / M;
+        result[i + 1] = y % M;
+    }
+    return result;
 }
