@@ -21,6 +21,7 @@ add_executable(pcrit
     src/criteria/structural.cpp
     src/evaluator.cpp
     src/generators.cpp
+    src/experiment.cpp
 )
 
 target_include_directories(pcrit PRIVATE include)
