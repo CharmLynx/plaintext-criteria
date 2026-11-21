@@ -29,6 +29,12 @@ bool criterion_1_1(const vector<int>& text, int l,
 bool criterion_1_2(const vector<int>& text, int l,
                    const vector<int>& forbidden,
                    const vector<double>& lang_freq) {
+    vector<double> freq = to_frequencies(count_ngrams(text, l));
+    for (int x : forbidden) {
+        if (freq[x] > lang_freq[x]) {
+            return true;
+        }
+    }
     return false;
 }
 
