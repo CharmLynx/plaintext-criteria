@@ -22,5 +22,29 @@ vector<int> uniform_sequence(int L, int l, mt19937& rng) {
 }
 
 vector<int> recurrent_sequence(int L, int l, mt19937& rng) {
-    return {};
+    int mod = (l == 1) ? M : M * M;
+    int count = (l == 1) ? L : L / 2;
+    uniform_int_distribution<int> dist(0, mod - 1);
+
+    vector<int> s(count);
+    s[0] = 0;
+    s[1] = 0;
+    while (s[0] == 0 && s[1] == 0) {
+        s[0] = dist(rng);
+        s[1] = dist(rng);
+    }
+    for (int i = 2; i < count; i++) {
+        s[i] = (s[i - 1] + s[i - 2]) % mod;
+    }
+
+    if (l == 1) {
+        return s;
+    }
+
+    vector<int> result(L);
+    for (int i = 0; i < count; i++) {
+        result[2 * i] = s[i] / M;
+        result[2 * i + 1] = s[i] % M;
+    }
+    return result;
 }
