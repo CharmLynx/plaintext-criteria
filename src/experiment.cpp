@@ -1,6 +1,7 @@
 #include "experiment.hpp"
 #include "distortions.hpp"
 #include "generators.hpp"
+#include "evaluator.hpp"
 
 using namespace std;
 
