@@ -14,6 +14,7 @@ add_executable(pcrit
     src/distortions.cpp
     src/language_model.cpp
     src/criteria/forbidden.cpp
+    src/criteria/entropy_test.cpp
 )
 
 target_include_directories(pcrit PRIVATE include)
