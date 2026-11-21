@@ -88,3 +88,23 @@ vector<int> load_corpus(const string& dir) {
 
     return corpus;
 }
+
+vector<string> sorted_files(const string& dir) {
+    vector<string> paths;
+    for (const auto& entry : fs::directory_iterator(dir)) {
+        paths.push_back(entry.path().string());
+    }
+    sort(paths.begin(), paths.end());
+    return paths;
+}
+
+void load_split_corpus(const string& dir, double train_share,
+                       vector<int>& train, vector<int>& test) {
+    for (const string& path : sorted_files(dir)) {
+        vector<int> book = clean_text(read_file(path));
+        size_t border = book.size() * train_share;
+        train.insert(train.end(), book.begin(), book.begin() + border);
+        test.insert(test.end(), book.begin() + border, book.end());
+        cout << path << ": " << border << " + " << book.size() - border << endl;
+    }
+}

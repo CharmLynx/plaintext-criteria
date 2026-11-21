@@ -12,3 +12,6 @@ std::string normalize_char(const std::string& ch);
 std::vector<int> clean_text(const std::string& text);
 
 std::vector<int> load_corpus(const std::string& dir);
+
+void load_split_corpus(const std::string& dir, double train_share,
+                       std::vector<int>& train, std::vector<int>& test);
