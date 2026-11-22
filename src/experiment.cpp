@@ -72,9 +72,9 @@ string num(double x) {
 
 vector<int> forbidden_sizes(int l) {
     if (l == 1) {
-        return {1, 2, 3, 4, 5};
+        return {1, 2, 3, 4, 5, 6, 7, 8};
     }
-    return {1, 2, 3, 5, 10, 20, 50, 100, 150, 200, 300, 400, 500};
+    return {1, 2, 3, 5, 10, 20, 50, 100, 150, 200, 300, 400, 500, 600, 700};
 }
 
 vector<CriterionSpec> all_criteria(const LanguageModel& model, mt19937& rng) {
