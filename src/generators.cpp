@@ -48,3 +48,11 @@ vector<int> recurrent_sequence(int L, int l, mt19937& rng) {
     }
     return result;
 }
+
+vector<int> periodic_text(const vector<int>& pattern, int L) {
+    vector<int> result(L);
+    for (int i = 0; i < L; i++) {
+        result[i] = pattern[i % pattern.size()];
+    }
+    return result;
+}
