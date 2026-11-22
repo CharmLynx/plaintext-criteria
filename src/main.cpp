@@ -6,6 +6,10 @@
 #include "language_model.hpp"
 #include "experiment.hpp"
 #include "report_writer.hpp"
+#include <random>
+#include "generators.hpp"
+#include "distortions.hpp"
+#include "criteria/entropy_test.hpp"
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -35,4 +39,10 @@ int main() {
                                             {10000, 10000, 10000, 1000},
                                             {1000, 1000, 1000, 200});
     write_error_tables("output", rows, all_distortions());
+
+    mt19937 rng(5);
+    vector<int> text = periodic_text(clean_text("хоа"), 10000);
+    vector<int> distorted = vigenere(text, 10, rng);
+    stats << "point 5 (3.0, l = 2): "
+          << criterion_3_0(distorted, 2, model.bigram_entropy, 0.1) << endl;
 }
