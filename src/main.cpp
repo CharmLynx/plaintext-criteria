@@ -1,7 +1,10 @@
+#include <iostream>
 #include <fstream>
 #include <filesystem>
 #include "preprocess.hpp"
 #include "ngram_stats.hpp"
+#include "language_model.hpp"
+#include "experiment.hpp"
 #include "report_writer.hpp"
 
 using namespace std;
@@ -10,25 +13,26 @@ namespace fs = std::filesystem;
 int main() {
     fs::create_directories("output");
 
-    vector<int> corpus = load_corpus("data/raw");
+    vector<int> train;
+    vector<int> test;
+    load_split_corpus("data/raw", 0.75, train, test);
 
-    vector<long long> letter_counts = count_ngrams(corpus, 1);
-    vector<double> letter_freq = to_frequencies(letter_counts);
-    double letter_entropy = entropy(letter_freq, 1);
-    double letter_index = coincidence_index(letter_counts);
+    LanguageModel model = build_language_model(train);
 
-    vector<long long> bigram_counts = count_ngrams(corpus, 2);
-    vector<double> bigram_freq = to_frequencies(bigram_counts);
-    double bigram_entropy = entropy(bigram_freq, 2);
-    double bigram_index = coincidence_index(bigram_counts);
-
-    write_letter_table("output/letters.csv", letter_freq);
-    write_bigram_table("output/bigrams.csv", bigram_freq);
+    write_letter_table("output/letters.csv", model.letter_freq);
+    write_bigram_table("output/bigrams.csv", model.bigram_freq);
 
     ofstream stats("output/stats.txt");
-    stats << "corpus = " << corpus.size() << endl;
-    stats << "H1 = " << letter_entropy << endl;
-    stats << "H2 = " << bigram_entropy << endl;
-    stats << "I1 = " << letter_index << endl;
-    stats << "I2 = " << bigram_index << endl;
+    stats << "train = " << train.size() << endl;
+    stats << "test = " << test.size() << endl;
+    stats << "H1 = " << model.letter_entropy << endl;
+    stats << "H2 = " << model.bigram_entropy << endl;
+    stats << "I1 = " << coincidence_index(count_ngrams(train, 1)) << endl;
+    stats << "I2 = " << coincidence_index(count_ngrams(train, 2)) << endl;
+
+    vector<ResultRow> rows = run_experiment(test, model,
+                                            {10, 100, 1000, 10000},
+                                            {10000, 10000, 10000, 1000},
+                                            {1000, 1000, 1000, 200});
+    write_error_tables("output", rows, all_distortions());
 }
