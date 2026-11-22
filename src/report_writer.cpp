@@ -31,3 +31,17 @@ void write_bigram_table(const string& path,
         f << endl;
     }
 }
+
+void write_error_tables(const string& dir,
+                        const vector<ResultRow>& rows,
+                        const vector<Distortion>& distortions) {
+    for (size_t d = 0; d < distortions.size(); d++) {
+        ofstream f(dir + "/errors_" + distortions[d].name + ".csv");
+        f << "L,criterion,thresholds_l1,FP_l1,FN_l1,thresholds_l2,FP_l2,FN_l2" << endl;
+        for (const ResultRow& row : rows) {
+            f << row.L << "," << row.criterion << ","
+              << "\"" << row.thresholds[0] << "\"," << row.fp[0] << "," << row.fn[0][d] << ","
+              << "\"" << row.thresholds[1] << "\"," << row.fp[1] << "," << row.fn[1][d] << endl;
+        }
+    }
+}
